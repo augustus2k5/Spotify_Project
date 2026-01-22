@@ -12,7 +12,7 @@ class AppTheme {
         backgroundColor: AppColors.primary,
         textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(30 as Radius),
+          borderRadius: BorderRadius.all(Radius.circular(30)),
         ),
       ),
     ),
@@ -28,7 +28,7 @@ class AppTheme {
         backgroundColor: AppColors.primary,
         textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(30 as Radius),
+          borderRadius: BorderRadius.all(Radius.circular(30)),
         ),
       ),
     ),

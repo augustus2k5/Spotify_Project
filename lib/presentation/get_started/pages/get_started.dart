@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:spotify/common/widgets/button/basic_app_button.dart';
 import 'package:spotify/core/configs/assets/app_images.dart';
 import 'package:spotify/core/configs/assets/app_vectors.dart';
+import 'package:spotify/presentation/choose_mode/pages/choose_mode.dart';
 
 class GetStarted extends StatelessWidget {
   const GetStarted({super.key});
@@ -16,10 +17,12 @@ class GetStarted extends StatelessWidget {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(AppImages.intro),
-                fit: BoxFit.fill,
+                fit: BoxFit.cover,
               ),
             ),
           ),
+
+          Container(color: Colors.black.withValues(alpha: 0.15)),
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -47,19 +50,26 @@ class GetStarted extends StatelessWidget {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: 20,),
-                    BasicAppButton(onPressed: () {}, title: "Get Started", height: 50,),
+                    SizedBox(height: 20),
+                    BasicAppButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ChooseMode(),
+                          ),
+                        );
+                      },
+                      title: "Get Started",
+                      height: 50,
+                    ),
                   ],
                 ),
                 SizedBox(height: 100),
               ],
             ),
           ),
-          Container(
-            color: Colors.black.withValues(alpha: 0.15),
-          )
         ],
-        
       ),
     );
   }

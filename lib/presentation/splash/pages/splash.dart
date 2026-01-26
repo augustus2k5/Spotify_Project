@@ -16,14 +16,15 @@ class _SplashState extends State<Splash> {
     super.initState();
     redirect();
   }
-
+ 
   @override
   Widget build(BuildContext context) {
     return Center(child: SvgPicture.asset(AppVectors.logo));
   }
 
   Future<void> redirect() async {
-    Future.delayed(Duration(seconds: 2), () {
+    await Future.delayed(Duration(seconds: 2),
+     () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => GetStarted()),

@@ -5,7 +5,7 @@ import 'package:spotify/presentation/choose_mode/bloc/theme_cubit.dart';
 import 'package:spotify/presentation/splash/pages/splash.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(BlocProvider(create: (_) => ThemeCubit(), child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -14,11 +14,17 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: AppTheme.darkTheme,
-      home: BlocProvider(create: (_) => ThemeCubit(), child: const Splash()),
-      debugShowCheckedModeBanner: false,
+    return BlocBuilder<ThemeCubit, ThemeMode>(
+      builder: (context, themeMode) {
+        return MaterialApp(
+          title: 'Flutter Demo',
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          themeMode: themeMode,
+          home: const Splash(),
+          debugShowCheckedModeBanner: false,
+        );
+      },
     );
   }
 }

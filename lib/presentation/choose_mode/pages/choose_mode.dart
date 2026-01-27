@@ -1,11 +1,10 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:spotify/common/widgets/button/basic_app_button.dart';
 import 'package:spotify/core/configs/assets/app_images.dart';
 import 'package:spotify/core/configs/assets/app_vectors.dart';
+import 'package:spotify/presentation/auth/pages/signup_or_signin.dart';
 import 'package:spotify/presentation/choose_mode/bloc/theme_cubit.dart';
 import 'package:spotify/presentation/choose_mode/widgets/mode_circle.dart';
 
@@ -53,22 +52,46 @@ class _ChooseModeState extends State<ChooseMode> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        GestureDetector(onTap: () {
-                          setState(() {
-                            _selectedMode = ThemeMode.dark;
-                          });
-                        }, child: ModeCircle(vector: AppVectors.moon, isSelected: _selectedMode == ThemeMode.dark,)),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedMode = ThemeMode.dark;
+                            });
+                          },
+                          child: ModeCircle(
+                            vector: AppVectors.moon,
+                            isSelected: _selectedMode == ThemeMode.dark,
+                          ),
+                        ),
                         SizedBox(width: 40),
-                        GestureDetector(onTap: () {
-                          setState(() {
-                            _selectedMode = ThemeMode.light;
-                          });
-                        }, child: ModeCircle(vector: AppVectors.sun, isSelected: _selectedMode == ThemeMode.light,)),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedMode = ThemeMode.light;
+                            });
+                          },
+                          child: ModeCircle(
+                            vector: AppVectors.sun,
+                            isSelected: _selectedMode == ThemeMode.light,
+                          ),
+                        ),
                       ],
                     ),
                     SizedBox(height: 60),
                     BasicAppButton(
-                      onPressed: () => context.read<ThemeCubit>().updateTheme(_selectedMode),
+                      onPressed: _selectedMode == null
+                          ? null
+                          : () {
+                              context.read<ThemeCubit>().updateTheme(
+                                _selectedMode!,
+                              );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => const SignupOrSignin(),
+                                ),
+                              );
+                            },
                       title: "Continue",
                       height: 50,
                     ),
@@ -83,5 +106,3 @@ class _ChooseModeState extends State<ChooseMode> {
     );
   }
 }
-
-

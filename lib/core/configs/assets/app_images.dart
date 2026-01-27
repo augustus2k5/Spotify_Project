@@ -1,7 +1,9 @@
 class AppImages {
   static const String basePath = "assets/images/";
-  static const String format = ".jpg";
+  static const String jpg = ".jpg";
+  static const String png = ".png";
 
-  static const String intro = "${basePath}1$format";
-  static const String chooseMode = "${basePath}3$format";
+  static const String intro = "${basePath}1$jpg";
+  static const String chooseMode = "${basePath}3$jpg";
+  static const String auth_bg = "${basePath}auth_bg$png";
 }

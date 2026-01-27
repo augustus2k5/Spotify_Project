@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotify/core/configs/theme/app_theme.dart';
+import 'package:spotify/presentation/choose_mode/bloc/theme_cubit.dart';
 import 'package:spotify/presentation/splash/pages/splash.dart';
 
 void main() {
@@ -10,12 +12,12 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   // This widget is the root of your application.
-  @override 
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: AppTheme.darkTheme,
-      home: const Splash(),
+      home: BlocProvider(create: (_) => ThemeCubit(), child: const Splash()),
       debugShowCheckedModeBanner: false,
     );
   }

@@ -1,14 +1,23 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:spotify/common/widgets/button/basic_app_button.dart';
 import 'package:spotify/core/configs/assets/app_images.dart';
 import 'package:spotify/core/configs/assets/app_vectors.dart';
+import 'package:spotify/presentation/choose_mode/bloc/theme_cubit.dart';
+import 'package:spotify/presentation/choose_mode/widgets/mode_circle.dart';
 
-class ChooseMode extends StatelessWidget {
+class ChooseMode extends StatefulWidget {
   const ChooseMode({super.key});
 
+  @override
+  State<ChooseMode> createState() => _ChooseModeState();
+}
+
+class _ChooseModeState extends State<ChooseMode> {
+  ThemeMode? _selectedMode;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,57 +49,39 @@ class ChooseMode extends StatelessWidget {
                         color: Colors.white,
                       ),
                     ),
-                    SizedBox(height: 50,),
+                    SizedBox(height: 50),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        ClipOval(
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                            child: Container(
-                              height: 80,
-                              width: 80,
-                              decoration: BoxDecoration(
-                                color: Color(0xff30393C),
-                                shape: BoxShape.circle
-                              ),
-                              child: SvgPicture.asset(
-                                AppVectors.moon,
-                                fit: BoxFit.none,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 40,),
-                        Container(
-                          height: 80,
-                          width: 80,
-                          decoration: BoxDecoration(
-                            color: Color(0xff30393C),
-                            shape: BoxShape.circle
-                          ),
-                          child: SvgPicture.asset(
-                            AppVectors.sun,
-                            fit: BoxFit.none,
-                          ),
-                        ),
+                        GestureDetector(onTap: () {
+                          setState(() {
+                            _selectedMode = ThemeMode.dark;
+                          });
+                        }, child: ModeCircle(vector: AppVectors.moon, isSelected: _selectedMode == ThemeMode.dark,)),
+                        SizedBox(width: 40),
+                        GestureDetector(onTap: () {
+                          setState(() {
+                            _selectedMode = ThemeMode.light;
+                          });
+                        }, child: ModeCircle(vector: AppVectors.sun, isSelected: _selectedMode == ThemeMode.light,)),
                       ],
-
                     ),
-                    SizedBox(height: 60,),
-                    BasicAppButton(onPressed: () {}, title: "Continue", height: 50,),
+                    SizedBox(height: 60),
+                    BasicAppButton(
+                      onPressed: () => context.read<ThemeCubit>().updateTheme(_selectedMode),
+                      title: "Continue",
+                      height: 50,
+                    ),
                   ],
                 ),
                 SizedBox(height: 100),
               ],
             ),
           ),
-          Container(
-            color: Colors.black.withValues(alpha: 0.15),
-          )
         ],
-        
       ),
     );
   }
 }
+
+

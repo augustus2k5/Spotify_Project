@@ -5,8 +5,8 @@ import 'package:spotify/common/widgets/button/basic_app_button.dart';
 import 'package:spotify/core/configs/assets/app_images.dart';
 import 'package:spotify/core/configs/assets/app_vectors.dart';
 import 'package:spotify/presentation/auth/pages/signup_or_signin.dart';
-import 'package:spotify/presentation/choose_mode/bloc/theme_cubit.dart';
 import 'package:spotify/presentation/choose_mode/widgets/mode_circle.dart';
+import 'package:spotify/presentation/common/bloc/theme_cubit.dart';
 
 class ChooseMode extends StatefulWidget {
   const ChooseMode({super.key});

@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:spotify/core/configs/assets/app_vectors.dart';
 import 'package:spotify/presentation/common/bloc/theme_cubit.dart';
 
-
 class Signin extends StatefulWidget {
   const Signin({super.key});
 
@@ -42,6 +41,23 @@ class _SigninState extends State<Signin> {
             },
           ),
         ],
+      ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text("Sign In", style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 45
+              ),),
+              const SizedBox(height: 20,),
+              TextField(decoration: InputDecoration(hint: Text("Full name")),)
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:spotify/common/widgets/button/basic_app_button.dart';
 import 'package:spotify/core/configs/assets/app_vectors.dart';
+import 'package:spotify/presentation/auth/pages/signup.dart';
 import 'package:spotify/presentation/common/bloc/theme_cubit.dart';
 
 class Signin extends StatefulWidget {
@@ -42,19 +44,62 @@ class _SigninState extends State<Signin> {
           ),
         ],
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight:
+                MediaQuery.of(context).size.height -
+                kToolbarHeight -
+                MediaQuery.of(context).padding.top,
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text("Sign In", style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 45
-              ),),
-              const SizedBox(height: 20,),
-              TextField(decoration: InputDecoration(hint: Text("Full name")),)
+              Text(
+                "Sign In",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 45),
+              ),
+              const SizedBox(height: 100),
+
+              TextField(decoration: InputDecoration(hintText: "Email")),
+              const SizedBox(height: 15),
+
+              TextField(
+                decoration: InputDecoration(hintText: "Password"),
+                obscureText: true,
+              ),
+
+              const SizedBox(height: 20),
+              BasicAppButton(onPressed: () {}, title: "Sign In"),
+
+              const SizedBox(height: 90),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Don't have an account? ",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const Signup()),
+                      );
+                    },
+                    child: Text(
+                      "Sign up",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.blue,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),

@@ -1,6 +1,8 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:spotify/core/configs/assets/app_vectors.dart';
+import 'package:spotify/firebase_options.dart';
 import 'package:spotify/presentation/get_started/pages/get_started.dart';
 
 class Splash extends StatefulWidget {
@@ -14,6 +16,7 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
+    _init();
     redirect();
   }
  
@@ -31,4 +34,12 @@ class _SplashState extends State<Splash> {
       );
     });
   }
+
+  Future<void> _init() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  // điều hướng tiếp
 }
+}
+

@@ -9,8 +9,9 @@ import 'package:spotify/presentation/splash/pages/splash.dart';
 import 'package:spotify/service_locator.dart';
 
 void main() async {
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await initializedDependencies();
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(BlocProvider(create: (_) => ThemeCubit(), child: const MyApp()));
 }
 

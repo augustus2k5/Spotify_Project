@@ -54,9 +54,9 @@ class SignupOrSignin extends StatelessWidget {
                       Expanded(
                         child: BasicAppButton(
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const Signup(),));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => Signup(),));
                           },
-                          title: "Register",
+                          title: "Sign up",
                           height: 60,
                         ),
                       ),

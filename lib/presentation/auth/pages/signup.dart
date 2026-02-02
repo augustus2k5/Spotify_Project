@@ -3,11 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:spotify/common/widgets/button/basic_app_button.dart';
 import 'package:spotify/core/configs/assets/app_vectors.dart';
+import 'package:spotify/data/models/auth/create_user_req.dart';
+import 'package:spotify/domain/usecases/auth/signup.dart';
 import 'package:spotify/presentation/auth/pages/signin.dart';
 import 'package:spotify/presentation/common/bloc/theme_cubit.dart';
+import 'package:spotify/presentation/root/pages/root.dart';
+import 'package:spotify/service_locator.dart';
 
 class Signup extends StatefulWidget {
-  const Signup({super.key});
+  Signup({super.key});
 
   @override
   State<Signup> createState() => _SignupState();
@@ -20,6 +24,10 @@ class _SignupState extends State<Signup> {
     super.initState();
     _selectedMode = context.read<ThemeCubit>().state;
   }
+
+  final TextEditingController _fullName = TextEditingController();
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -63,19 +71,55 @@ class _SignupState extends State<Signup> {
               ),
               const SizedBox(height: 100),
 
-              TextField(decoration: InputDecoration(hintText: "Full name")),
-              const SizedBox(height: 15),
-
-              TextField(decoration: InputDecoration(hintText: "Email")),
+              TextField(
+                controller: _fullName,
+                decoration: InputDecoration(hintText: "Full name"),
+              ),
               const SizedBox(height: 15),
 
               TextField(
+                controller: _email,
+                decoration: InputDecoration(hintText: "Email"),
+              ),
+              const SizedBox(height: 15),
+
+              TextField(
+                controller: _password,
                 decoration: InputDecoration(hintText: "Password"),
                 obscureText: true,
               ),
 
               const SizedBox(height: 20),
-              BasicAppButton(onPressed: () {}, title: "Create Account"),
+              BasicAppButton(
+                onPressed: () async {
+                  var result = await sl<SignupUseCase>().call(
+                    params: CreateUserReq(
+                      fullName: _fullName.text.toString(),
+                      email: _email.text.toString(),
+                      password: _password.text.toString(),
+                    ),
+                  );
+                  result.fold(
+                    (l) {
+                      var snackBar = SnackBar(
+                        content: Text(l),
+                        behavior: SnackBarBehavior.floating,
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    },
+                    (r) {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RootPage(),
+                        ),
+                        (route) => false,
+                      );
+                    },
+                  );
+                },
+                title: "Create Account",
+              ),
 
               const SizedBox(height: 90),
               Row(

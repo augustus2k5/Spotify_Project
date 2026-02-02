@@ -8,7 +8,7 @@ import 'package:spotify/presentation/common/bloc/theme_cubit.dart';
 import 'package:spotify/presentation/splash/pages/splash.dart';
 
 void main() async {
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(BlocProvider(create: (_) => ThemeCubit(), child: const MyApp()));
 }
 

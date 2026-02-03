@@ -18,11 +18,9 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
-  ThemeMode? _selectedMode;
   @override
   void initState() {
     super.initState();
-    _selectedMode = context.read<ThemeCubit>().state;
   }
 
   final TextEditingController _fullName = TextEditingController();

@@ -14,11 +14,9 @@ class Signin extends StatefulWidget {
 }
 
 class _SigninState extends State<Signin> {
-  ThemeMode? _selectedMode;
   @override
   void initState() {
     super.initState();
-    _selectedMode = context.read<ThemeCubit>().state;
   }
 
   @override

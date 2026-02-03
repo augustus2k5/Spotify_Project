@@ -13,4 +13,8 @@ Future<void> initializedDependencies() async {
   sl.registerSingleton<SignupUseCase>(
     SignupUseCase()
   );
-}
+
+  sl.registerSingleton<SignupUseCase>(
+    SignupUseCase()
+  );
+} 

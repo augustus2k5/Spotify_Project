@@ -3,8 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:spotify/common/widgets/button/basic_app_button.dart';
 import 'package:spotify/core/configs/assets/app_vectors.dart';
+import 'package:spotify/data/models/auth/signin_user_request.dart';
+import 'package:spotify/domain/usecases/auth/signin.dart';
 import 'package:spotify/presentation/auth/pages/signup.dart';
 import 'package:spotify/presentation/common/bloc/theme_cubit.dart';
+import 'package:spotify/presentation/root/pages/root.dart';
+import 'package:spotify/service_locator.dart';
 
 class Signin extends StatefulWidget {
   const Signin({super.key});
@@ -18,6 +22,9 @@ class _SigninState extends State<Signin> {
   void initState() {
     super.initState();
   }
+
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -61,16 +68,42 @@ class _SigninState extends State<Signin> {
               ),
               const SizedBox(height: 100),
 
-              TextField(decoration: InputDecoration(hintText: "Email")),
+              TextField(controller: _email, decoration: InputDecoration(hintText: "Email")),
               const SizedBox(height: 15),
 
               TextField(
+                controller: _password,
                 decoration: InputDecoration(hintText: "Password"),
                 obscureText: true,
               ),
 
               const SizedBox(height: 20),
-              BasicAppButton(onPressed: () {}, title: "Sign In"),
+              BasicAppButton(onPressed: () async{
+                var result = await sl<SigninUseCase>().call(
+                    params: SigninUserRequest(
+                      email: _email.text.toString(),
+                      password: _password.text.toString(),
+                    ),
+                  );
+                  result.fold(
+                    (l) {
+                      var snackBar = SnackBar(
+                        content: Text(l),
+                        behavior: SnackBarBehavior.floating,
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    },
+                    (r) {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RootPage(),
+                        ),
+                        (route) => false,
+                      );
+                    },
+                  );
+              }, title: "Sign In"),
 
               const SizedBox(height: 90),
               Row(
